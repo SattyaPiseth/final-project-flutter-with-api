@@ -24,9 +24,11 @@ class ImageSlider extends StatelessWidget {
               onPageChanged: onChange,
               physics: const ClampingScrollPhysics(),
               children: [
-                Image.asset(
-                  "images/slider.jpg",
-                  fit: BoxFit.cover,
+                Center(
+                  child: Image.asset(
+                    "images/slider.jpg",
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Image.asset(
                   "images/image1.png",

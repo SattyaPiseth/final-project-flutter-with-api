@@ -115,7 +115,7 @@ class Profile extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               const Text(
-                                "Winnie Vasquez",
+                                "Piseth Sattya",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w800,
                                   fontSize: 35,
