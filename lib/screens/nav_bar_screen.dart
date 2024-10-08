@@ -6,29 +6,33 @@ import 'package:flutter/material.dart';
 import 'Favorite/favorite.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+  final String token;
+
+  const BottomNavBar({super.key, required this.token});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int cuttentIndex = 2;
-    List screens = const [
-    Scaffold(),
-    Favorite(),
-    HomeScreen(),
-    CartScreen(),
-    Profile(),
+  int currentIndex = 2; // Start with HomeScreen as default
+
+  // IndexedStack preserves the state of each screen
+  List<Widget> get screens => [
+    Scaffold(), // Placeholder for the first screen
+    const Favorite(), // Favorite screen (doesn't require token)
+    HomeScreen(token: widget.token), // HomeScreen with token passed
+    const CartScreen(), // Cart screen (no token needed)
+    const Profile(), // Profile screen (no token needed)
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            cuttentIndex = 2;
-          
+            currentIndex = 2; // Navigate to HomeScreen on FAB press
           });
         },
         shape: const CircleBorder(),
@@ -54,58 +58,59 @@ class _BottomNavBarState extends State<BottomNavBar> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  cuttentIndex = 0;
+                  currentIndex = 0; // Navigate to first screen
                 });
               },
               icon: Icon(
                 Icons.grid_view_outlined,
                 size: 30,
-                color: cuttentIndex == 0 ? kprimaryColor : Colors.grey.shade400,
+                color: currentIndex == 0 ? kprimaryColor : Colors.grey.shade400,
               ),
             ),
             IconButton(
               onPressed: () {
                 setState(() {
-                  cuttentIndex = 1;
+                  currentIndex = 1; // Navigate to Favorite screen
                 });
               },
               icon: Icon(
                 Icons.favorite_border,
                 size: 30,
-                color: cuttentIndex == 1 ? kprimaryColor : Colors.grey.shade400,
+                color: currentIndex == 1 ? kprimaryColor : Colors.grey.shade400,
               ),
             ),
-            const SizedBox(
-              width: 15,
-            ),
+            const SizedBox(width: 15), // Space for FAB
             IconButton(
               onPressed: () {
                 setState(() {
-                  cuttentIndex = 3;
+                  currentIndex = 3; // Navigate to Cart screen
                 });
               },
               icon: Icon(
                 Icons.shopping_cart_outlined,
                 size: 30,
-                color: cuttentIndex == 3 ? kprimaryColor : Colors.grey.shade400,
+                color: currentIndex == 3 ? kprimaryColor : Colors.grey.shade400,
               ),
             ),
             IconButton(
               onPressed: () {
                 setState(() {
-                  cuttentIndex = 4;
+                  currentIndex = 4; // Navigate to Profile screen
                 });
               },
               icon: Icon(
                 Icons.person,
                 size: 30,
-                color: cuttentIndex == 4 ? kprimaryColor : Colors.grey.shade400,
+                color: currentIndex == 4 ? kprimaryColor : Colors.grey.shade400,
               ),
             ),
           ],
         ),
       ),
-      body: screens[cuttentIndex],
+      body: IndexedStack(
+        index: currentIndex, // Show the selected screen
+        children: screens, // Preserve the state of each screen
+      ),
     );
   }
 }
